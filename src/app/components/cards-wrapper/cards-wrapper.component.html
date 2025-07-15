@@ -1,0 +1,57 @@
+<div class="card-wrapper-container">
+  <div class="header-section">
+        <button
+            *ngIf="!submitted"
+            type="button" 
+            class="btn btn-success submit-all-btn"
+            (click)="onSubmitAll()"
+            [disabled]="!isFormValid()">
+            Submit All Forms
+        </button>
+        <button
+            *ngIf="submitted"
+            type="button" 
+            class="btn btn-danger cancel-btn"
+            (click)="onCancel()">
+            Cancel
+        </button>
+      
+        <div class="form-summary" *ngIf="!submitted">
+            <p class="validation-status" [class.valid]="isFormValid()" [class.invalid]="!isFormValid()">
+                {{ isFormValid() ? 'All forms are valid' : 'Invalid forms: ' + getInvalidCardsCount() }}
+            </p>
+        </div>
+
+        <div *ngIf="submitted">0.0{{timer}}</div>
+  </div>
+
+  <form [formGroup]="cardsWrapperForm" class="cards-form">
+    <div formArrayName="cards" class="cards-grid">
+      <div 
+        *ngFor="let cardControl of cardControls; let i = index" 
+        class="card-item"
+        [formGroupName]="i">
+        
+        <div class="card-header">
+          <button 
+            type="button" 
+            class="remove-btn"
+            (click)="removeCard(i)"
+            [disabled]="cardsArray.length === 1"
+            title="Remove this card">
+            ×
+          </button>
+        </div>
+
+        <app-card [parentForm]="cardControl" [cardIndex]="i"></app-card>
+      </div>
+
+      <div 
+        class="add-card-placeholder"
+        *ngIf="cardsArray.length < 10"
+        (click)="addCard()">
+        <div class="add-icon">+</div>
+      </div>
+    </div>
+  </form>
+</div>

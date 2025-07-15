@@ -1,0 +1,25 @@
+.suggestion-item {
+    cursor: pointer;
+}
+
+input.error {
+    border-color: #cb444a;
+}
+
+input.success {
+    border-color: #28a745;
+}
+
+.error-message {
+    color: #cb444a;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+form {
+    padding: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}

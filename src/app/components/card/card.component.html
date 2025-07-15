@@ -1,0 +1,64 @@
+<form [formGroup]="form">
+    <div class="form-group">
+        <label [for]="'country' + cardIndex">Country</label>
+        <div class="country-container">
+            <input
+                type="text"
+                [id]="'country' + cardIndex"
+                formControlName="country"
+                class="form-control"
+                forbiddenCountryValidator
+                (focus)="onCountryFocus()"
+                (blur)="onCountryBlur()"
+            >
+            <div class="suggestions" *ngIf="showSuggestions">
+                
+                <div
+                    *ngFor="let suggestion of filteredCountries"
+                    class="suggestion-item"
+                    (mousedown)="selectCountry(suggestion)"
+                >
+                    {{ suggestion }}
+                </div>
+            </div>
+            <div class="error-message" *ngIf="form && form.controls['country']?.invalid && form.controls['country']?.touched">
+                <span *ngIf="form.controls['country']?.errors?.['required']">Country is required</span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <label [for]="'username' + cardIndex">Username *</label>
+        <input
+            [id]="'username' + cardIndex"
+            type="text"
+            formControlName="username"
+            placeholder="Enter username"
+            class="form-control"
+            userNameValidator
+            [class.error]="form.controls['username'].invalid && form.controls['username'].touched"
+        />
+        <div class="error-message" *ngIf="form.controls['username']?.invalid && form.controls['username']?.touched">
+            <span *ngIf="form.controls['username']?.errors?.['required']">Username is required</span>
+            <span *ngIf="!form.controls['username']?.errors?.['isAvailable']">{{usernameErrorMsg}}</span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label [for]="'birthday' + cardIndex">Birthday *</label>
+        <input
+            [id]="'birthday' + cardIndex"
+            type="date"
+            formControlName="birthday"
+            class="form-control"
+            birthdayValidator
+            [class.error]="form.controls['birthday'].invalid && form.controls['birthday'].touched"
+        />
+
+        <div class="error-message" *ngIf="form.controls['birthday']?.invalid && form.controls['birthday']?.touched">
+            <span *ngIf="form.controls['birthday']?.errors?.['required']">Birthday is required</span>
+        </div>
+    </div>
+
+</form>
